@@ -13,7 +13,7 @@ _defaults.update({
 })
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class DBConfig:  # type: ignore[misc]
     registry: EmbeddingFunction
     model: TextEmbeddingFunction
