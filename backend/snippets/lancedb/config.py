@@ -6,14 +6,20 @@ from lancedb.embeddings.sentence_transformers import (
     SentenceTransformerEmbeddings as ST_Embeddings
 )
 
+_defaults = {'registry': get_registry().get('sentence-transformers')}
+
+_defaults.update({
+    'model': _defaults['registry'].create(name='BAAI/bge-small-en-v1.5')
+})
+
 
 @dataclasses.dataclass
 class DBConfig:  # type: ignore[misc]
-    registery: EmbeddingFunction
+    registry: EmbeddingFunction
     model: TextEmbeddingFunction
 
 
 # ST is SentenceTransformer
 class ST_Config(DBConfig):
-    registery: ST_Embeddings = get_registry().get('sentence-transformers')
-    model: ST_Embeddings = registery.create(name='BAAI/bge-small-en-v1.5')
+    registry: ST_Embeddings = dataclasses.field(default=_defaults['registry'])
+    model: ST_Embeddings = dataclasses.field(default=_defaults['model'])
