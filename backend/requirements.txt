@@ -1,0 +1,8 @@
+lancedb
+sentence_transformers
+Wikipedia-API
+numpy
+tantivy
+flask
+requests
+python-dotenv

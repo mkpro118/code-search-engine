@@ -1,0 +1,43 @@
+services:
+  frontend:
+    build:
+      context: frontend
+    environment:
+      NODE_ENV: debug
+    ports:
+      - 3000:3000
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./frontend/package.json
+
+  backend:
+    build:
+      context: backend
+    ports:
+      - 5000:5000
+    volumes:
+      - gh_data:/app/gh_data
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./backend/requirements.txt
+    secrets:
+      - gh_secret
+
+volumes:
+  gh_data:
+
+secrets:
+  gh_secret:
+    file: ./backend/.env
