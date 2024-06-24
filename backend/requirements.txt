@@ -6,3 +6,4 @@ tantivy
 flask
 requests
 python-dotenv
+sortedcontainers
