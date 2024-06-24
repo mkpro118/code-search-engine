@@ -16,9 +16,7 @@ class Snippet:
         if self.filename is None:
             return
 
-        filename = self.filename
-        if not isinstance(filename, pathlib.Path):
-            filename = pathlib.Path(self.filename)
+        filename = pathlib.Path(self.filename)
 
         self.filename = filename.name
 
