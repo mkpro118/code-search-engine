@@ -1,6 +1,8 @@
 import dataclasses
 import pathlib
 
+from typing import Optional
+
 from snippets.languages import Language
 
 
@@ -8,6 +10,17 @@ from snippets.languages import Language
 class Snippet:
     content: str
     language: Language
+    filename: Optional[str] = None
+
+    def __post_init__(self):
+        if self.filename is None:
+            return
+
+        filename = self.filename
+        if not isinstance(filename, pathlib.Path):
+            filename = pathlib.Path(self.filename)
+
+        self.filename = filename.name
 
     @classmethod
     def from_file(cls, filepath: str | pathlib.Path) -> 'Snippet':
@@ -30,4 +43,4 @@ class Snippet:
         with open(str(filepath)) as f:
             content = f.read()
 
-        return cls(content=content, language=language)
+        return cls(content=content, language=language, filename=str(filepath))
