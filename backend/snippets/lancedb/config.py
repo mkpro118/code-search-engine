@@ -6,6 +6,7 @@ from lancedb.embeddings.sentence_transformers import (
     SentenceTransformerEmbeddings as ST_Embeddings
 )
 
+
 @dataclasses.dataclass
 class DBConfig:  # type: ignore[misc]
     registery: EmbeddingFunction
