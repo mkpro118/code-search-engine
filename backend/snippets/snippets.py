@@ -42,3 +42,9 @@ class Snippet:
             content = f.read()
 
         return cls(content=content, language=language, filename=str(filepath))
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            'content': self.content,
+            'language': self.language.value,
+        }
