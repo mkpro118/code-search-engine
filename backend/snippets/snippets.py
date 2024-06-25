@@ -10,7 +10,7 @@ from snippets.languages import Language
 class Snippet:
     text: str
     language: Language
-    filename: Optional[str] = None
+    filename: Optional[pathlib.Path] = None
 
     def __post_init__(self):
         if self.filename is None:
@@ -18,7 +18,7 @@ class Snippet:
 
         filename = pathlib.Path(self.filename)
 
-        self.filename = filename.name
+        self.filename = filename
 
     @classmethod
     def from_file(cls, filepath: str | pathlib.Path) -> "Snippet":
@@ -41,7 +41,7 @@ class Snippet:
         with open(str(filepath)) as f:
             text = f.read()
 
-        return cls(text=text, language=language, filename=str(filepath))
+        return cls(text=text, language=language, filename=filepath)
 
     def to_dict(self) -> dict[str, str]:
         return {
