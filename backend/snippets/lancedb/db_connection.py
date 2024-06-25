@@ -1,6 +1,6 @@
 import dataclasses
 
-from typing import Collection, Optional
+from typing import Optional
 
 import lancedb
 from lancedb.db import DBConnection
@@ -14,7 +14,7 @@ from snippets.lancedb.table import SnippetTable
 class SnippetDBConnection:  # type: ignore[misc]
     configs: DBConfig | list[DBConfig]
     db: Optional[DBConnection] = None
-    db_uri: Optional[str] = '.snippet-db'
+    db_uri: Optional[str] = ".snippet-db"
 
     def __post_init__(self):
         # All good case
@@ -23,9 +23,7 @@ class SnippetDBConnection:  # type: ignore[misc]
 
         # All bad case, error
         if (None, None) == (self.db, self.db_uri):
-            raise ValueError(
-                f'Need at least one of db or db_uri not be {None}'
-            )
+            raise ValueError(f"Need at least one of db or db_uri not be {None}")
 
         if isinstance(self.configs, DBConfig):
             self.configs = [self.configs]
@@ -51,13 +49,15 @@ class SnippetDBConnection:  # type: ignore[misc]
 
     def _check_state(self) -> None:
         if not isinstance(self.configs, list):
-            raise ValueError('Invalid state, expected self.configs to be a list')
+            raise ValueError(
+                "Invalid state, expected self.configs to be a list"
+            )
 
     def add_config(self, config: DBConfig) -> None:
         if not isinstance(config, DBConfig):
             raise TypeError(
-                f'Table is not an instance of {type(DBConfig)}. '
-                f'Found {type(config)}'
+                f"Table is not an instance of {type(DBConfig)}. "
+                f"Found {type(config)}"
             )
 
         self._check_state()
@@ -75,38 +75,37 @@ class SnippetDBConnection:  # type: ignore[misc]
                 break
         else:
             raise ValueError(
-                'No registered configurations found that match',
-                'the table configuration'
+                "No registered configurations found that match",
+                "the table configuration",
             )
         if not isinstance(table, SnippetTable):
             raise TypeError(
-                f'Table is not an instance of {type(SnippetTable)}. '
-                f'Found {type(table)}'
+                f"Table is not an instance of {type(SnippetTable)}. "
+                f"Found {type(table)}"
             )
 
         self.tables.update({table.name: table})
 
     @classmethod
-    def from_uri(cls, config: DBConfig, uri: str) -> 'SnippetDBConnection':
+    def from_uri(cls, config: DBConfig, uri: str) -> "SnippetDBConnection":
         return cls(configs=config, db_uri=uri)
 
     @classmethod
-    def from_db_connection(cls, config: DBConfig,  # type: ignore[misc]
-                           db_connection: DBConnection) -> 'SnippetDBConnection':
+    def from_db_connection(
+        cls, config: DBConfig, db_connection: DBConnection  # type: ignore[misc]
+    ) -> "SnippetDBConnection":
         return cls(configs=config, db=db_connection)
 
-    def get_or_create_table(self, config: DBConfig,
-                            table_name: str) -> SnippetTable:
+    def get_or_create_table(
+        self, config: DBConfig, table_name: str
+    ) -> SnippetTable:
         if table_name in self.tables:
             return self.tables[table_name]
 
         self._check_state()
 
         self.tables[table_name] = SnippetTable(
-            config=config,
-            name=table_name,
-            db=self,
-            factory=self.factory
+            config=config, name=table_name, db=self, factory=self.factory
         )
 
         return self.tables[table_name]
