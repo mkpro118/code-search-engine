@@ -11,7 +11,7 @@ class SnippetGenerator:
 
     def generate_response(
         self, query: str, language: Optional[str] = None, limit: int = 5
-    ) -> list[str]:
+    ) -> str:
         # Search for relevant snippets
         search_results = self.search_snippets(query, language, limit)
 
