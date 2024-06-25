@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 from typing import Callable, Collection, Optional
 
 from gh_api import get_request
-from blob import Blob
+from gh_api.blob import Blob
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)

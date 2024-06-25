@@ -8,7 +8,7 @@ from snippets.languages import Language
 
 @dataclasses.dataclass
 class Snippet:
-    content: str
+    text: str
     language: Language
     filename: Optional[str] = None
 
@@ -39,12 +39,13 @@ class Snippet:
             )
 
         with open(str(filepath)) as f:
-            content = f.read()
+            text = f.read()
 
-        return cls(content=content, language=language, filename=str(filepath))
+        return cls(text=text, language=language, filename=str(filepath))
 
     def to_dict(self) -> dict[str, str]:
         return {
-            "content": self.content,
+            "text": self.text,
             "language": self.language.value,
+            "filename": str(self.filename),
         }

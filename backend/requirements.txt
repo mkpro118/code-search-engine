@@ -4,5 +4,7 @@ Wikipedia-API
 numpy
 tantivy
 flask
+flask_cors
 requests
 python-dotenv
+pandas

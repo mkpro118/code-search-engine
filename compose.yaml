@@ -1,11 +1,20 @@
 services:
   frontend:
+    container_name: cse-frontend
     build:
       context: frontend
     environment:
       NODE_ENV: debug
+    networks:
+      - app
     ports:
       - 3000:3000
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 100
+        window: 120s
     develop:
       watch:
         - action: sync
@@ -17,12 +26,26 @@ services:
           path: ./frontend/package.json
 
   backend:
+    container_name: cse-backend
     build:
       context: backend
     ports:
       - 5000:5000
     volumes:
       - gh_data:/app/gh_data
+      - mkpro118_db:/app/mkpro118_db
+    networks:
+      - app
+    deploy:
+      resources:
+        limits:
+          cpus: '6.0'
+          memory: 1G
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 100
+        window: 120s
     develop:
       watch:
         - action: sync
@@ -37,7 +60,11 @@ services:
 
 volumes:
   gh_data:
+  mkpro118_db:
 
 secrets:
   gh_secret:
     file: ./backend/.env
+
+networks:
+  app:

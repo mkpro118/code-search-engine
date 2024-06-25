@@ -1,38 +1,178 @@
+:root {
+  --background-color-light: #d0d2d5;
+  --background-color-dark: #2c2c2c;
+  --container-background-light: #dddddd;
+  --container-background-dark: #333333;
+  --text-color-light: #333;
+  --text-color-dark: #dddddd;
+  --input-background-light: #dddddd;
+  --input-background-dark: #444444;
+  --button-background-light: #007bff;
+  --button-background-dark: #0056b3;
+  --chat-bubble-user-light: #007bff;
+  --chat-bubble-user-dark: #0056b3;
+  --chat-bubble-bot-light: #e9ecef;
+  --chat-bubble-bot-dark: #555555;
+  --border-color-light: #aaa;
+  --border-color-dark: #555555;
+}
+
+[data-theme='light'] {
+  --background-color: var(--background-color-light);
+  --container-background: var(--container-background-light);
+  --text-color: var(--text-color-light);
+  --input-background: var(--input-background-light);
+  --button-background: var(--button-background-light);
+  --chat-bubble-user: var(--chat-bubble-user-light);
+  --chat-bubble-bot: var(--chat-bubble-bot-light);
+  --neg-chat-bubble-bot: var(--chat-bubble-bot-dark);
+  --border-color: var(--border-color-light);
+}
+
+[data-theme='dark'] {
+  --background-color: var(--background-color-dark);
+  --container-background: var(--container-background-dark);
+  --text-color: var(--text-color-dark);
+  --input-background: var(--input-background-dark);
+  --button-background: var(--button-background-dark);
+  --chat-bubble-user: var(--chat-bubble-user-dark);
+  --chat-bubble-bot: var(--chat-bubble-bot-dark);
+  --neg-chat-bubble-bot: var(--chat-bubble-bot-light);
+  --border-color: var(--border-color-dark);
+}
+
+body, html, #root, .App {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color);
+  font-family: Arial, sans-serif;
+  transition: background-color 500ms;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: var(--container-background);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 90%;
+  max-width: 70vw;
+  height: 80%;
+  max-height: 80%;
+  color: var(--text-color);
+  transition: background-color 500ms;
+}
+
+h1 {
+  margin: 0;
+  padding: 10px 0;
+  font-size: 24px;
+  width: 100%;
+  text-align: center;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  background-color: var(--container-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 20px 0;
+  overflow-y: auto;
+  flex-grow: 1;
+  transition: background-color 500ms;
+}
+
+.chat-bubble {
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 75%;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background-color: var(--chat-bubble-user);
   color: white;
+  border-bottom-right-radius: 0;
+  transition: background-color 500ms;
 }
 
-.App-link {
-  color: #61dafb;
+.chat-bubble.bot {
+  align-self: flex-start;
+  background-color: var(--chat-bubble-bot);
+  color: var(--text-color);
+  border-bottom-left-radius: 0;
+  transition: background-color 500ms;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  padding-left: 30rem;
+  border: 2px solid var(--chat-bubble-user);
+  border-radius: 4px;
+  font-size: 16px;
+  margin-right: 10px;
+  box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.1);
+  background-color: var(--input-background);
+  color: var(--text-color);
+  transition: border-color background-color color 500ms;
+}
+
+input:focus {
+  border-color: var(--button-background);
+  outline: none;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: var(--button-background);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  background-color: var(--button-background-dark);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 500ms;
+}
+
+.chat-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  transition: background-color 500ms;
+  border-radius: 4px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  transition: background-color 500ms;
 }
