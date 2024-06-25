@@ -91,8 +91,8 @@ class SnippetDBConnection:  # type: ignore[misc]
         return cls(configs=config, db_uri=uri)
 
     @classmethod
-    def from_db_connection(
-        cls, config: DBConfig, db_connection: DBConnection  # type: ignore[misc]
+    def from_db_connection(  # type: ignore[misc]
+        cls, config: DBConfig, db_connection: DBConnection
     ) -> "SnippetDBConnection":
         return cls(configs=config, db=db_connection)
 
