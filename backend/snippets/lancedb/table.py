@@ -8,6 +8,8 @@ from typing import cast, Literal, Optional
 from lancedb.table import Table
 from lancedb.rerankers import Reranker
 
+import pyarrow.fs as pa_fs
+
 from snippets import Snippet
 from snippets.lancedb.config import DBConfig
 
@@ -26,17 +28,21 @@ class SnippetTable:  # type: ignore[misc]
         if isinstance(snippets, Snippet):
             snippets = [snippets]
 
-        # dicts = map(Snippet.to_dict, snippets)
+        dicts = map(Snippet.to_dict, snippets)
 
-        # def x(p):
-        #     print(len(p['content']), len(p['language']))
-        #     return p
+        self.table.add(pd.DataFrame(dicts))
 
-        # dicts = map(x, dicts)
+    def create_index(self, replace: bool = False) -> None:
+        self.table.create_fts_index("text", replace=replace)
 
-        # self.table.add(dicts)
-        self.table.add(pd.DataFrame(snippets))
-        self.table.create_fts_index("text")
+    def has_index(self) -> bool:
+        fs, path = pa_fs.FileSystem.from_uri(self.table._get_fts_index_path())
+
+        # Mypy could not infer type
+        # See https://stackoverflow.com/a/75865051
+        return cast(
+            bool, fs.get_file_info(path).type != pa_fs.FileType.NotFound
+        )
 
     def use_rerankers(self, reranker: Reranker | Iterable[Reranker]) -> None:
         if isinstance(reranker, Reranker):
@@ -64,4 +70,5 @@ class SnippetTable:  # type: ignore[misc]
 
         srch = srch.limit(limit=limit)
 
+        # Mypy could not infer type
         return cast(pd.DataFrame, srch.to_pandas())
