@@ -33,7 +33,8 @@ services:
       - 5000:5000
     volumes:
       - gh_data:/app/gh_data
-      - mkpro118_db:/app/mkpro118_db
+      - cse_db:/app/cse_db
+      - indexes:/app/indexes
     networks:
       - app
     deploy:
@@ -60,7 +61,8 @@ services:
 
 volumes:
   gh_data:
-  mkpro118_db:
+  cse_db:
+  indexes:
 
 secrets:
   gh_secret:
