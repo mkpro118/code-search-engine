@@ -44,11 +44,11 @@ const MetaData: React.FC<MetaDataProps> = (props: MetaDataProps) => {
   return (
     <>
       <div className="user-container">
-        <legend>User</legend>
+        <legend>User:</legend>
         <input className="meta" id="user" placeholder={user} onChange={userChange}/>
       </div>
       <div className="repo-container">
-        <legend>Repository</legend>
+        <legend>Repository:</legend>
         <input className="meta" id="repo" placeholder={repo}  onChange={repoChange}/>
       </div>
     </>
@@ -122,7 +122,7 @@ const SearchEngine: React.FC = () => {
                 <div key={index} className="result-item">
                   <h2 title={result.filename} >{result.filename.length > maxlen ? `${result.filename.substring(0, maxlen)}...`: result.filename}
                     &nbsp;<small>({result.language})</small>
-                    &nbsp;<small><a href={result.link}>[see source]</a></small>
+                    &nbsp;<small><a href={result.link} target="blank_">[see source]</a></small>
                   </h2>
                   <p>Preview</p>
                   <pre>{result.text}</pre>
