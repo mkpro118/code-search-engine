@@ -93,6 +93,7 @@
 .result-item a {
   color: #0af;
   text-decoration: none;
+  font: normal;
 }
 
 .result-item p {
@@ -137,4 +138,9 @@
   border: 1px solid black;
 
   width: 80%;
+}
+
+legend {
+  text-align: left;
+  margin-inline: 5px;
 }
