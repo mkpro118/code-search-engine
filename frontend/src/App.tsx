@@ -1,12 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import SearchEngine from './SearchEngine';
-
-interface Response {
-  from: string;
-  text: string;
-}
 
 function App() {
   const [theme, setTheme] = useState('light');

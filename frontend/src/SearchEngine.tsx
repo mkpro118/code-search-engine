@@ -78,7 +78,6 @@ const SearchEngine: React.FC = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
-  const [langs, setLangs] = useState<string[]>([]);
   const [user, setUser] = useState<string>('mkpro118');
   const [repo, setRepo] = useState<string>('mkpro118-repository');
 
