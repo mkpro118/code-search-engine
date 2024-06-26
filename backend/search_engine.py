@@ -2,10 +2,9 @@ import os
 import pathlib
 
 import pandas as pd
-from typing import Any, Callable, Generator, Iterable, Optional
+from typing import Callable, Generator, Iterable, Optional
 
 from lancedb.rerankers import Reranker
-from lancedb.util import fs_from_uri
 
 from snippets import Snippet
 from snippets.languages import Language
