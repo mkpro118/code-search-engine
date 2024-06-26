@@ -8,3 +8,5 @@ flask_cors
 requests
 python-dotenv
 pandas
+git+https://github.com/mkpro118/lancedb-snippets.git
+git+https://github.com/mkpro118/gh-api.git
