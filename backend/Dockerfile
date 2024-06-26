@@ -16,6 +16,10 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # the application crashes without emitting any logs due to buffering.
 ENV PYTHONUNBUFFERED=1
 
+RUN apt-get update && apt-get install --no-install-recommends -y git\
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
